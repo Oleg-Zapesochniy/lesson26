@@ -14,21 +14,44 @@ let gulp = require('gulp');
 let uglify = require('gulp-uglify-es').default;
 let rename = require('gulp-rename');
 let concat = require('gulp-concat');
-let livereload = require('gulp-livereload');
+let browserSync = require('browser-sync');
 
 gulp.task('minify', ()=> {
-    gulp.src('js/*.js')
+    return gulp.src('js/*.js')
         .pipe(uglify())
         .pipe(rename({ extname: '.min.js' }))
         .pipe(gulp.dest('build'))
+        .pipe(browserSync.reload({stream:true}))
 })
 gulp.task('concat', ()=>{
-    gulp.src(arrayJsFilesWithPath)
+    return gulp.src(arrayJsFilesWithPath)
         .pipe(concat('main.js'))
         .pipe(gulp.dest('dist'))
+        .pipe(browserSync.reload({stream:true}))
 })
 
+gulp.task('browserSync', ()=>{
+    browserSync.init({
+        server: {
+            baseDir: "./"
+        },
+        port: 8090,
+        open: true,
+        notify: false
+    });
+});
+
+gulp.task('html', () => {
+    return gulp.src('*.html')
+        .pipe(browserSync.reload({stream:true}))
+});
+
 gulp.task('watch', ()=>{
-    livereload.listen();
-    gulp.watch('index.html')
+    gulp.watch('js/*.js', gulp.parallel('minify', 'concat'));
+    gulp.watch([
+        '*.html',
+        'data.json'
+    ], gulp.parallel('html'))
 })
+
+gulp.task('default', gulp.parallel('watch', 'browserSync'))
