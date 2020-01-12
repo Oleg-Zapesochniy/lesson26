@@ -1,7 +1,7 @@
-let dataFromServer;
+var dataFromServer;
 requestData();
 
-let tasks;
+var tasks;
 tasks = localStorageGet();
 
 clearTasks();
