@@ -1,0 +1,25 @@
+{
+    "status" : [
+        "Open",
+        "IN progress",
+        "Done"
+    ],
+    "priority" : [
+        "Low",
+        "Minor",
+        "Major",
+        "High"
+    ],
+    "defaults":[
+        "Meeting",
+        "Do",
+        "Reminder"
+
+    ],
+    "defaultsDoes":[
+        "Meeting. time: 10 30, place: somewhere",
+        "Do something/nothing",
+        "DO NOT forget to go to work"
+    ]
+
+}
